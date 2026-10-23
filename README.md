@@ -17,4 +17,4 @@ Cada alteração salva neste repositório é publicada automaticamente pelo Netl
 
 - **Número do WhatsApp:** em `index.html`, procure `CONFIG` e altere `whatsapp` (só dígitos, com 55 + DDD).
 - **Link por vendedor:** envie `https://SEU-DOMINIO/?v=5531999999999`. Os botões passam a chamar esse número.
-- **Endereço do site:** quando o domínio próprio estiver ativo, trocar `metodo-real.netlify.app` pelo domínio em `index.html` (linhas `canonical`, `og:url`, `og:image`, `twitter:image`).
+- **Endereço do site:** quando o domínio próprio estiver ativo, trocar `metodoreal.netlify.app` pelo domínio em `index.html` (linhas `canonical`, `og:url`, `og:image`, `twitter:image`).
