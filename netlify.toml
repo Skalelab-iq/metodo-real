@@ -1,0 +1,15 @@
+# Configuração do Netlify: site estático, sem etapa de build.
+[build]
+  publish = "."
+
+# Imagens e vídeo: guardados no navegador por 7 dias.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Fontes: não mudam, guardadas por 1 ano.
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
