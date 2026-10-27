@@ -237,7 +237,8 @@ html:not(.anim) .mcard-fig img,.anim .mcard.in .mcard-fig img{transform:scale(1)
 .mcard li{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid rgba(222,239,247,.12);font-size:.96rem;line-height:1.4;color:var(--text)}
 .mcard li svg{width:18px;height:18px;margin-top:1px;color:var(--gold)}
 .mcard .ghostnum{position:absolute;right:14px;top:4px;font-family:var(--f-display);font-weight:800;font-size:5.5rem;line-height:1;color:rgba(222,239,247,.05);pointer-events:none}
-@media (min-width:960px){.mods{grid-template-columns:repeat(3,1fr);gap:20px}.mcard-body{padding:28px 26px 32px}}
+@media (min-width:720px){.mods{grid-template-columns:repeat(2,1fr);gap:20px}.mcard-body{padding:28px 26px 32px}}
+@media (min-width:1180px){.mods{grid-template-columns:repeat(4,1fr);gap:18px}.mcard-body{padding:26px 22px 30px}.mcard h3{font-size:clamp(1.4rem,1.6vw,1.6rem)}}
 
 /* Interconexão */
 .ciclo{background:linear-gradient(180deg,var(--ink),#13283A)}
@@ -287,6 +288,59 @@ html:not(.anim) .mcard-fig img,.anim .mcard.in .mcard-fig img{transform:scale(1)
 .nao-big b{font-weight:800}
 .nao-small{color:var(--muted)}
 @media (min-width:860px){.quem-grid{grid-template-columns:1.1fr 1fr}}
+
+
+/* Nivelamento prévio */
+.nivel{background:var(--ink);overflow:hidden;isolation:isolate}
+.nivel .orb{position:absolute;z-index:-1;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none}
+.nivel .o1{width:46vw;height:46vw;max-width:620px;max-height:620px;left:-12%;top:-10%;background:radial-gradient(circle,rgba(181,176,151,.22),rgba(181,176,151,0) 65%);animation:drift1 18s ease-in-out infinite}
+.nivel .o2{width:40vw;height:40vw;max-width:540px;max-height:540px;right:-10%;bottom:-14%;background:radial-gradient(circle,rgba(44,67,85,.9),rgba(44,67,85,0) 65%);animation:drift2 22s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
+@keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-5vw)}}
+.nivel-box{position:relative;border-radius:18px;background:linear-gradient(160deg,rgba(44,67,85,.55),rgba(15,30,43,.6));border:1px solid rgba(203,198,176,.28);padding:clamp(22px,4vw,44px);display:grid;gap:clamp(28px,4vw,44px);overflow:hidden}
+.nivel-box::before{content:"";position:absolute;inset:8px;border:1px solid rgba(203,198,176,.1);border-radius:12px;pointer-events:none}
+.track{position:relative;display:grid;grid-template-columns:repeat(3,1fr);padding-top:14px}
+.track-line{position:absolute;left:16.66%;right:16.66%;top:26px;height:2px;background:rgba(222,239,247,.14);border-radius:2px}
+.track-fill{position:absolute;left:16.66%;top:26px;height:2px;width:calc(66.68% * var(--p,0));background:var(--gold-grad);border-radius:2px;transition:width 1.2s var(--ease);box-shadow:0 0 12px rgba(181,176,151,.5)}
+.marker{position:absolute;top:26px;left:calc(16.66% + 33.34% * var(--i,0));width:18px;height:18px;margin:-8px 0 0 -9px;border-radius:50%;background:var(--gold-grad);box-shadow:0 0 0 6px rgba(181,176,151,.18),0 0 24px rgba(181,176,151,.6);transition:left .9s cubic-bezier(.65,0,.2,1);z-index:2}
+.marker::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(203,198,176,.6);animation:ring 2.2s ease-out infinite}
+@keyframes ring{0%{transform:scale(.6);opacity:1}100%{transform:scale(2.2);opacity:0}}
+.stage{position:relative;z-index:1;display:grid;justify-items:center;gap:10px;padding:0 6px 6px;background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;text-align:center;transition:color .4s}
+.stage .st-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(203,198,176,.55);background:var(--ink);transform:scale(.6);transition:transform .5s var(--spring), background .4s, border-color .4s}
+.stage .st-name{font-family:var(--f-display);font-weight:700;font-size:clamp(.82rem,1.6vw,1.05rem);line-height:1.2;color:var(--text);margin-top:6px;transition:color .4s}
+.stage .st-sub{font-size:clamp(.7rem,1.3vw,.84rem);line-height:1.3;color:var(--muted)}
+.stage[aria-selected="true"] .st-dot{background:var(--gold);border-color:var(--gold-hi);transform:scale(1)}
+.stage[aria-selected="true"] .st-name{color:var(--gold-hi)}
+.stage:hover .st-name{color:var(--white)}
+.stage:focus-visible{outline:2px solid var(--gold-hi);outline-offset:4px;border-radius:8px}
+.anim .nivel-box:not(.in) .track-fill{width:0}
+.anim .nivel-box:not(.in) .stage{opacity:0;transform:translateY(10px)}
+.stage{transition:opacity .6s var(--ease), transform .6s var(--spring), color .4s}
+.stage:nth-child(3){transition-delay:.15s}.stage:nth-child(4){transition-delay:.3s}.stage:nth-child(5){transition-delay:.45s}
+.anim .nivel-box:not(.in) .marker{opacity:0}
+.marker{transition:left .9s cubic-bezier(.65,0,.2,1), opacity .6s .6s}
+.panel{position:relative;display:grid;gap:28px}
+.panel-txt{display:grid;gap:18px;min-width:0;transition:opacity .35s var(--ease), transform .35s var(--ease)}
+.panel-txt.out{opacity:0;transform:translateY(10px)}
+.p-eyebrow{font-size:var(--fs-label);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.panel-txt h3{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--white);line-height:1.08}
+.p-block{display:grid;gap:6px}
+.p-block .label{color:var(--gold-lo)}
+.p-block p{color:#D3DAE0}
+.ghostn{position:absolute;right:-6px;top:-30px;font-family:var(--f-display);font-weight:800;font-size:clamp(7rem,16vw,13rem);line-height:1;color:rgba(222,239,247,.045);pointer-events:none;transition:opacity .5s}
+.ghostn.out{opacity:0}
+.panel-bars{display:grid;gap:14px;align-content:start;padding:22px 22px 24px;border-radius:14px;background:rgba(15,30,43,.55);border:1px solid rgba(222,239,247,.1)}
+.panel-bars .label{margin-bottom:4px}
+.bar-row{display:grid;grid-template-columns:minmax(0,120px) 1fr;gap:12px;align-items:center;font-size:.9rem;color:var(--text)}
+.bar-row i{display:block;height:8px;border-radius:8px;background:rgba(222,239,247,.1);overflow:hidden}
+.bar-row b{display:block;height:100%;width:calc(var(--w,0) * 1%);background:var(--gold-grad);border-radius:8px;transition:width 1s var(--ease)}
+.bar-row:nth-child(3) b{transition-delay:.08s}.bar-row:nth-child(4) b{transition-delay:.16s}.bar-row:nth-child(5) b{transition-delay:.24s}
+.anim .nivel-box:not(.in) .bar-row b{width:0}
+.panel-bars small{color:var(--muted);font-size:.8rem;line-height:1.4}
+.nivel-cta{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;color:var(--muted);font-size:.95rem}
+.nivel-cta b{color:var(--white);font-weight:600}
+@media (min-width:900px){.panel{grid-template-columns:1.25fr 1fr;gap:48px;align-items:start}.track{padding-top:18px}.track-line,.track-fill,.marker{top:30px}}
+@media (max-width:520px){.stage .st-sub{display:none}.stage{padding:0 2px 4px}}
 
 /* Turma */
 .turma{background:var(--ink)}
@@ -477,8 +531,8 @@ footer a{color:#A8B5BF}
   <div class="wrap">
     <div class="sec-head" data-r>
       <p class="label">A jornada</p>
-      <h2 id="t-mod"><span class="thin">Três pilares,</span> <span class="bold">três módulos em sequência.</span></h2>
-      <p>Cada módulo prepara o seguinte: primeiro <b>quem você é</b>, depois <b>o que você constrói</b> e, por fim, <b>como você é visto</b>.</p>
+      <h2 id="t-mod"><span class="thin">Três pilares,</span> <span class="bold">quatro módulos em sequência.</span></h2>
+      <p>Cada módulo prepara o seguinte: primeiro <b>quem você é</b>, depois <b>o que você constrói</b>, <b>como você é visto</b> e, por fim, <b>como você conduz o negócio</b>.</p>
     </div>
 
     <div class="mods">
@@ -535,6 +589,26 @@ footer a{color:#A8B5BF}
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Desenvolvimento de marca pessoal autêntica</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Estratégia SEO para atração qualificada</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Identidade visual e comunicação consistente</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="mcard" data-r>
+        <figure class="mcard-fig ph">
+          <img src="assets/08-gestao-900.webp" alt="Médico conduzindo uma reunião de planejamento com a equipe da clínica" width="900" height="1125" loading="lazy" decoding="async" style="object-position:50% 35%" onerror="this.classList.add('x')">
+          <span class="tag">Como você conduz</span>
+        </figure>
+        <div class="mcard-body">
+          <span class="ghostnum" aria-hidden="true">4</span>
+          <p class="n">Módulo 4 · Gestão</p>
+          <h3><span>Empreendedorismo</span> em Ação</h3>
+          <p>Gestão empresarial aplicada à clínica médica. A diferença entre um consultório que depende de você e um negócio que cresce com você no comando.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Planejamento estratégico e plano de negócio</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Gestão de pessoas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Gestão de processos e inovação</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Gestão de tempo e mentalidade</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>DRE e finanças da clínica</li>
           </ul>
         </div>
       </article>
@@ -617,6 +691,46 @@ footer a{color:#A8B5BF}
         <p class="nao-big">Não é para quem procura <b>promessa de rentabilidade rápida</b> ou <b>visibilidade a qualquer custo.</b></p>
         <p class="nao-small">Nem para quem não está disposto a olhar para as próprias crenças e hábitos.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ NIVELAMENTO ============================ -->
+<section class="sec nivel" id="nivelamento" aria-labelledby="t-nivel">
+  <div class="orb o1" aria-hidden="true"></div><div class="orb o2" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head" data-r>
+      <p class="label">Nivelamento prévio</p>
+      <h2 id="t-nivel"><span class="thin">O mesmo método,</span> <span class="bold">pontos de partida diferentes.</span></h2>
+      <p>Um médico com clínica própria e anos de formado não começa do mesmo lugar que quem acabou de sair da residência. Por isso, antes da Turma 01, cada participante passa por um <b>nivelamento</b> e a jornada é calibrada para o seu momento. Toque no seu.</p>
+    </div>
+    <div class="nivel-box" data-r id="nivel">
+      <div class="track" role="tablist" aria-label="Escolha o seu momento de carreira">
+        <span class="track-line" aria-hidden="true"></span>
+        <span class="track-fill" aria-hidden="true"></span>
+        <button class="stage" role="tab" type="button" aria-selected="true" id="st0" aria-controls="nivel-panel"><span class="st-dot"></span><span class="st-name">Saindo da residência</span><span class="st-sub">Primeiros anos de carreira</span></button>
+        <button class="stage" role="tab" type="button" aria-selected="false" id="st1" aria-controls="nivel-panel"><span class="st-dot"></span><span class="st-name">Consultório em crescimento</span><span class="st-sub">Agenda cheia, estrutura improvisada</span></button>
+        <button class="stage" role="tab" type="button" aria-selected="false" id="st2" aria-controls="nivel-panel"><span class="st-dot"></span><span class="st-name">Clínica própria, anos de estrada</span><span class="st-sub">Gestão, patrimônio e legado</span></button>
+        <span class="marker" aria-hidden="true"></span>
+      </div>
+      <div class="panel" id="nivel-panel" role="tabpanel" aria-live="polite">
+        <span class="ghostn" id="ghostn" aria-hidden="true">1</span>
+        <div class="panel-txt" id="ptxt">
+          <p class="p-eyebrow" id="p-eyebrow">Momento 1 de 3</p>
+          <h3 id="p-title"></h3>
+          <div class="p-block"><span class="label">Seu ponto de partida</span><p id="p-start"></p></div>
+          <div class="p-block"><span class="label">Onde a jornada concentra energia</span><p id="p-focus"></p></div>
+        </div>
+        <div class="panel-bars">
+          <p class="label">Intensidade por pilar</p>
+          <div class="bar-row"><span>Autoconhecimento</span><i><b id="b1"></b></i></div>
+          <div class="bar-row"><span>Finanças</span><i><b id="b2"></b></i></div>
+          <div class="bar-row"><span>Autoridade</span><i><b id="b3"></b></i></div>
+          <div class="bar-row"><span>Gestão</span><i><b id="b4"></b></i></div>
+          <small>Quanto mais cheia a barra, mais tempo a jornada dedica àquele pilar no seu momento. O conteúdo é o mesmo; a profundidade muda.</small>
+        </div>
+      </div>
+      <p class="nivel-cta"><span class="dot"></span><span><b>O nivelamento acontece antes da turma começar</b>, numa conversa com a equipe.</span></p>
     </div>
   </div>
 </section>
@@ -767,6 +881,47 @@ const CONFIG = {
     const start = ()=>{ v.src = v.dataset.src; v.addEventListener("playing",()=>v.classList.add("on"),{once:true}); const p = v.play(); if(p) p.catch(()=>{}); };
     if("requestIdleCallback" in window) requestIdleCallback(start,{timeout:1500}); else setTimeout(start,600);
   });
+
+
+  /* Nivelamento prévio */
+  (function(){
+    const box = document.getElementById("nivel"); if(!box) return;
+    const dados = [
+      {t:"Técnica em dia. Estrutura ainda por construir.", s:"Agenda começando a encher, primeiro CNPJ, primeiras decisões sobre dinheiro, imagem e rumo. Tudo ainda está em aberto, e é exatamente isso que torna este o momento mais barato para acertar.", f:"Fundação: identidade financeira antes do primeiro excesso, PJ organizada desde o primeiro contrato e um posicionamento que nasce autêntico, em vez de ser corrigido depois.", b:[90,65,55,40]},
+      {t:"O faturamento cresceu. A estrutura ficou para trás.", s:"Fatura bem, mas PJ e pessoa física se misturam, a equipe é pequena e tudo passa por você. Ganhar mais ainda significa trabalhar mais horas.", f:"Separar as finanças, criar processos que funcionem sem a sua presença e transformar a reputação que já existe em posicionamento que atrai o paciente certo.", b:[55,85,75,80]},
+      {t:"Muito construído. Pouco tempo para proteger.", s:"Patrimônio formado, equipe para liderar e uma agenda em que não cabe mais nada. As perguntas agora são outras: proteção, sucessão, escala e o que fica quando você sair de cena.", f:"Planejamento sucessório e tributário, DRE e gestão de pessoas na clínica, e uma autoridade que abre frentes além do consultório, sem depender da sua hora atendida.", b:[50,80,60,95]}
+    ];
+    const stages = [...box.querySelectorAll(".stage")], marker = box.querySelector(".marker"), fill = box.querySelector(".track-fill");
+    const txt = document.getElementById("ptxt"), ghost = document.getElementById("ghostn");
+    const el = {t:document.getElementById("p-title"), s:document.getElementById("p-start"), f:document.getElementById("p-focus"), e:document.getElementById("p-eyebrow")};
+    const bars = ["b1","b2","b3","b4"].map(id=>document.getElementById(id));
+    let cur = 0, timer = 0, auto = true, visto = false;
+    function paint(i, instant){
+      const d = dados[i];
+      el.t.textContent = d.t; el.s.textContent = d.s; el.f.textContent = d.f; el.e.textContent = "Momento "+(i+1)+" de 3";
+      ghost.textContent = i+1;
+      bars.forEach((b,k)=>b.style.setProperty("--w", d.b[k]));
+    }
+    function go(i){
+      cur = i;
+      stages.forEach((s,k)=>s.setAttribute("aria-selected", k===i ? "true" : "false"));
+      marker.style.setProperty("--i", i);
+      fill.style.setProperty("--p", i/2);
+      if(reduz){ paint(i); return; }
+      txt.classList.add("out"); ghost.classList.add("out");
+      setTimeout(()=>{ paint(i); txt.classList.remove("out"); ghost.classList.remove("out"); }, 320);
+    }
+    stages.forEach((s,i)=>s.addEventListener("click",()=>{ auto = false; clearInterval(timer); go(i); try{ (window.dataLayer=window.dataLayer||[]).push({event:"nivelamento_click", momento:i+1}); }catch(e){} }));
+    box.addEventListener("keydown",e=>{ if(e.key==="ArrowRight"||e.key==="ArrowLeft"){ auto=false; clearInterval(timer); go((cur + (e.key==="ArrowRight"?1:2)) % 3); stages[cur].focus(); } });
+    paint(0); fill.style.setProperty("--p", 0);
+    if(!reduz && "IntersectionObserver" in window){
+      new IntersectionObserver(es=>{
+        if(es[0].isIntersecting){ if(!visto){ visto = true; if(auto) timer = setInterval(()=>go((cur+1)%3), 4500); } }
+        else { clearInterval(timer); timer = 0; }
+        if(es[0].isIntersecting && visto && auto && !timer) timer = setInterval(()=>go((cur+1)%3), 4500);
+      },{threshold:.45}).observe(box);
+    }
+  })();
 
   /* Barra fixa aparece depois que o botão do topo sai da tela */
   const bar = document.getElementById("sticky"), heroBtn = document.getElementById("cta-hero"), fim = document.getElementById("t-final");
