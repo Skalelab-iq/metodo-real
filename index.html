@@ -215,7 +215,8 @@ html:not(.anim) .big{background-position:0 0}
   .letters{grid-template-columns:repeat(4,1fr);gap:0}
   .letter{grid-template-columns:1fr;align-items:start;padding:0 28px 0;border-bottom:0;border-left:1px solid rgba(222,239,247,.12)}
   .letter:first-child{border-left:0;padding-left:0}
-  .big{text-align:left}
+  .big{text-align:left;width:auto;display:block;padding-right:.1em;box-sizing:content-box}
+  .letter{align-content:start}
 }
 .anim .letter:nth-child(2) .big{transition-delay:.12s}.anim .letter:nth-child(3) .big{transition-delay:.24s}.anim .letter:nth-child(4) .big{transition-delay:.36s}
 
