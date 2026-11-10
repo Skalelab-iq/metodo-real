@@ -1,6 +1,6 @@
 # Método R.E.A.L · Landing page
 
-Página de venda da Turma 01 do Método R.E.A.L, mentoria para médicos.
+Página de venda da Turma 1/2027 do Método R.E.A.L, mentoria para médicos.
 Cada alteração salva neste repositório é publicada automaticamente pelo Netlify.
 
 ## Estrutura
