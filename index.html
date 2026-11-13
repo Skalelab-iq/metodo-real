@@ -953,6 +953,19 @@ const CONFIG = {
     new IntersectionObserver(es=>{ const e = es[0]; passou = !e.isIntersecting && e.boundingClientRect.top < 0; upd(); }).observe(heroBtn);
     new IntersectionObserver(es=>{ fimVis = es[0].isIntersecting; upd(); }).observe(fim);
   }
+
+  /* Versão sempre atual: se a aba ficou aberta e saiu uma versão nova, recarrega ao voltar */
+  if(location.protocol.indexOf("http")===0 && window.fetch){
+    let base = null, saiu = 0;
+    const versao = ()=>fetch(location.pathname, {method:"HEAD", cache:"no-store"}).then(r=>r.headers.get("etag")).catch(()=>null);
+    const confere = ()=>versao().then(v=>{ if(base && v && v!==base) location.reload(); });
+    window.addEventListener("load", ()=>setTimeout(()=>versao().then(v=>{ base = v; }), 3000));
+    document.addEventListener("visibilitychange", ()=>{
+      if(document.hidden){ saiu = Date.now(); }
+      else if(saiu && Date.now()-saiu > 60000){ confere(); }
+    });
+    window.addEventListener("pageshow", e=>{ if(e.persisted) confere(); });
+  }
 })();
 </script>
 </body>

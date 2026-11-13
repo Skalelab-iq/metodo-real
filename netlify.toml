@@ -2,11 +2,19 @@
 [build]
   publish = "."
 
-# Imagens e vídeo: guardados no navegador por 7 dias.
+# Página: o navegador sempre confere se há versão nova antes de mostrar.
 [[headers]]
-  for = "/assets/*"
+  for = "/"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Imagens e vídeo seguem o padrão do Netlify (conferência a cada visita),
+# para que uma foto trocada apareça na hora, no celular e no computador.
 
 # Fontes: não mudam, guardadas por 1 ano.
 [[headers]]
